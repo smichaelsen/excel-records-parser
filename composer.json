@@ -1,0 +1,13 @@
+{
+    "name": "smichaelsen/excel-records-parser",
+    "type": "library",
+    "require": {
+        "phpoffice/phpexcel": "*",
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Smichaelsen\\ExcelRecordsParser\\": "src/Classes/"
+        }
+    }
+}
