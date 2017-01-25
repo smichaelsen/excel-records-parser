@@ -7,7 +7,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Smichaelsen\\ExcelRecordsParser\\": "src/Classes/"
+            "Smichaelsen\\ExcelRecordsParser\\": "Classes/"
         }
     }
 }
