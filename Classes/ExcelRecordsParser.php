@@ -10,9 +10,15 @@ class ExcelRecordsParser
     {
         $excelObject = \PHPExcel_IOFactory::load($filepath);
         foreach ($excelObject->getAllSheets() as $worksheet) {
+            $i = 0;
             foreach ($worksheet->getRowIterator() as $row) {
+                if (!empty($parsingConfiguration['skip_lines'])) {
+                    if ($i++ < $parsingConfiguration['skip_lines']) {
+                        continue;
+                    }
+                }
                 $record = [];
-                foreach ($parsingConfiguration as $fieldName => $fieldParsingConfiguration) {
+                foreach ($parsingConfiguration['fields'] as $fieldName => $fieldParsingConfiguration) {
                     $cellName = $fieldParsingConfiguration['column'] . $row->getRowIndex();
                     $value = $worksheet->getCell($cellName)->getValue();
                     if (is_callable($fieldParsingConfiguration['transform'])) {
