@@ -19,8 +19,16 @@ class ExcelRecordsParser
                 }
                 $record = [];
                 foreach ($parsingConfiguration['fields'] as $fieldName => $fieldParsingConfiguration) {
-                    $cellName = $fieldParsingConfiguration['column'] . $row->getRowIndex();
-                    $value = $worksheet->getCell($cellName)->getValue();
+                    $possibleColumnNames = array_map('trim', explode('//', $fieldParsingConfiguration['column']));
+                    $value = null;
+                    $possibleColumnName = null;
+                    foreach ($possibleColumnNames as $possibleColumnName) {
+                        $cellName = $possibleColumnName . $row->getRowIndex();
+                        $value = $worksheet->getCell($cellName)->getValue();
+                        if (!empty($value)) {
+                            break;
+                        }
+                    }
                     if (is_callable($fieldParsingConfiguration['transform'])) {
                         $value = call_user_func($fieldParsingConfiguration['transform'], $value);
                     }
